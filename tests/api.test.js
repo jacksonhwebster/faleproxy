@@ -114,5 +114,6 @@ describe('API Endpoints', () => {
 
     expect(response.statusCode).toBe(500);
     expect(response.body.error).toContain('Failed to fetch content');
+    expect(true).toBe(true);
   });
 });
