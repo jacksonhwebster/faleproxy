@@ -63,22 +63,32 @@ npm run test:ci
 
 ## CI/CD Pipeline
 
-The repository includes a GitHub Actions workflow configuration in `.github/workflows/ci.yml` that:
+The repository includes a GitHub Actions workflow (`.github/workflows/ci.yml`) that automatically:
 
-1. Runs on pushes to main/master branches and on pull requests
-2. Tests the application on multiple Node.js versions (18.x, 20.x)
-3. Generates and uploads test coverage reports
-4. Automatically deploys to Vercel (when pushing to main/master)
+1. **Runs tests** on pushes to main/master branches and on pull requests
+2. **Tests on multiple Node.js versions** (18.x, 20.x) to ensure compatibility
+3. **Generates test coverage reports** and uploads them as artifacts
+4. **Deploys to Vercel production** automatically when tests pass on the main/master branch
+
+**Important:** The deployment only happens when all tests pass. If any test fails, the deployment is skipped.
 
 ### Setting up Vercel Deployment
 
-To enable automatic deployments to Vercel, you need to:
+To enable automatic deployments to Vercel, you need to configure the following GitHub secrets:
 
-1. Create a Vercel account and link your repository
-2. Create a Vercel project for your application
-3. Generate a Vercel token and add it as a secret in your GitHub repository:
-   - Go to Settings → Secrets → Actions
-   - Add a new secret named `VERCEL_TOKEN` with your Vercel token
+1. **Get your Vercel credentials:**
+   - Go to your Vercel project settings
+   - Get your Vercel Token from https://vercel.com/account/tokens
+   - Find your Organization ID and Project ID in your project settings
+
+2. **Add GitHub secrets:**
+   - Go to your GitHub repository → Settings → Secrets and variables → Actions
+   - Add the following secrets:
+     - `VERCEL_TOKEN` - Your Vercel API token
+     - `VERCEL_ORG_ID` - Your Vercel organization ID
+     - `VERCEL_PROJECT_ID` - Your Vercel project ID
+
+Once configured, every push to main/master that passes tests will automatically deploy to your Vercel production URL.
 
 ## Technologies Used
 
